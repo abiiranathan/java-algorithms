@@ -1,0 +1,66 @@
+plugins {
+    // Apply the application plugin to add support for building a CLI application in Java.
+    id 'application'
+    id 'java'
+    id 'maven-publish'
+}
+
+group = 'com.github.jitpack'
+version = '1.0'
+
+java {
+	withSourcesJar()
+	withJavadocJar()
+}
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+}
+
+dependencies {
+    // Use JUnit Jupiter for testing.
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
+
+    // javax.annotations dependency
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+}   
+
+application {
+    // Define the main class for the application.
+    mainClass = 'algorithms.App'
+}
+
+tasks.named('test') {
+    // Use JUnit Platform for unit tests.
+    useJUnitPlatform()
+}
+
+// Test configuration
+test{
+    testLogging{
+        showStandardStreams=true
+        exceptionFormat='full'
+        events = ["passed", "failed", "skipped"]
+    }
+}
+
+
+publishing {
+  repositories {
+    maven {
+      name = "GitHubPackages"
+      url = "https://maven.pkg.github.com/abiiranathan/java-algorithms"
+      credentials {
+        username = System.getenv("GITHUB_ACTOR")
+        password = System.getenv("GITHUB_TOKEN")
+      }
+    }
+  }
+
+    publications {
+        maven(MavenPublication) {
+		from components.java
+        }
+    }
+}
