@@ -5,7 +5,7 @@ plugins {
     id 'maven-publish'
 }
 
-group = 'com.github.java-algorithms'
+group = 'com.github.abiiranathan'
 version = '1.0'
 description = 'A collection of medical, math and engineering algorithms in Java.'
 
